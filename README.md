@@ -1,3 +1,4 @@
 # AOC-2024
-Playing Advent of Code
-Who the eff knows what language? Thinking OCaml if I can get it working.
+Playing Advent of Code in Python
+
+I want to also write this year in OCaml, but I'm struggling there. May update later.
