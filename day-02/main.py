@@ -25,9 +25,9 @@ def check_steps(nums):
     outlying_steps = list(filter(lambda x: x < 1 or x > 3, steps))
     ##print(outlying_steps)
     if not outlying_steps:
-        return 1
+        return True
     else:
-        return 0
+        return False
 
 def first_process_lines(lines):
     sum = 0
@@ -37,10 +37,59 @@ def first_process_lines(lines):
         ordered = check_order(nums)
         ##print(ordered)
         if ordered:
-            sum += check_steps(nums)
+            steps = check_steps(nums)
+            if steps:
+                sum += 1
     return sum
         
+def second_process_lines(lines):
+    sum = 0
+    for line in lines:
+        steps = False
+        nums = get_levels(line)
+        ordered = check_order(nums)
+        if ordered:
+            checking = check_steps(nums)
+            if checking:
+                sum += 1
+            else:
+                for i in range(len(nums)):
+                    copy_nums = nums.copy()
+                    del copy_nums[i]
+                    ordered = check_order(copy_nums)
+                    if ordered:
+                        #print("new ordered")
+                        #print(nums, copy_nums)
+                        checking = check_steps(copy_nums)
+                        if checking:
+                            steps = True
+                if steps == True:
+                    sum += 1
+        else:
+            steps = False
+            for i in range(len(nums)):
+                copy_nums = nums.copy()
+                del copy_nums[i]
+                ordered = check_order(copy_nums)
+                if ordered:
+                    #print("new ordered")
+                    #print(nums, copy_nums)
+                    checking = check_steps(copy_nums)
+                    if checking:
+                        steps = True
+            if steps == True:
+                sum += 1
+
+    return sum
+
 with open(FILE_PATH) as file:
     lines = file.readlines()
     first_ans = first_process_lines(lines)
     print("First answer:", first_ans)
+
+with open(FILE_PATH) as file:
+    lines = file.readlines()
+    print(lines)
+    sec_ans = second_process_lines(lines)
+    print("Second answer:", sec_ans)
+
